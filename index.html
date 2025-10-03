@@ -1,0 +1,973 @@
+<!-- FILE: index.html --> <!-- indica o nome do arquivo (apenas comentário) -->
+<!doctype html> <!-- declara o tipo de documento como HTML5 -->
+<html lang="pt-BR"> <!-- elemento raiz do HTML com idioma definido para português do Brasil -->
+<head> <!-- início do head (metadados, título, links, scripts) -->
+  <meta charset="utf-8" /> <!-- define a codificação de caracteres como UTF-8 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- torna a página responsiva em dispositivos móveis -->
+  <title>Minerar Engenharia — Consultoria em Mineração e Meio Ambiente</title> <!-- título que aparece na aba do navegador -->
+  <meta name="description" content="Minerar Engenharia — consultoria em mineração, licenciamento ambiental e monitoramento." /> <!-- meta descrição para SEO -->
+
+  <!-- Favicon -->
+  <link rel="icon" href="Favcon/logomarca_sem_fundo.png" type="image/x-icon"> <!-- link para o favicon do site -->
+
+  <!-- Tailwind CDN (prototipagem) + custom config -->
+  <script src="https://cdn.tailwindcss.com"></script> <!-- importa Tailwind via CDN (bom para prototipagem) -->
+  <script> <!-- configurações customizadas do Tailwind (executadas após o CDN) -->
+    tailwind.config = { // inicia a configuração custom do Tailwind
+      theme: { // seção de tema
+        extend: { // estende valores padrão
+          colors: { // define cores customizadas utilizadas no projeto
+            verd: '#0F4D2E', // cor verde principal
+            ouro: '#D4A017', // cor ouro/dourada
+            cinza: '#2B2F33', // tom de cinza escuro
+            bege: '#F5EFE6', // tom bege de fundo
+            laranja: '#E66A00' // tom laranja para CTA
+          },
+          fontFamily: { // define famílias de fontes personalizadas
+            serif: ['Merriweather', 'serif'], // fonte serif para títulos
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'] // fonte sans para corpo do texto
+          }
+        }
+      }
+    }
+  </script> <!-- fim do script de configuração do Tailwind -->
+
+  <!-- Swiper (carrossel) -->
+ 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet"> <!-- importa fontes do Google Fonts -->
+
+  <style>  /*estilos adicionais que não foram criados via Tailwind */
+    /* small extra styles that tailwind doesn't express easily inline */
+    :root{color-scheme: light dark} /* permite combinação de esquema de cores para navegadores */
+    .glass { background: rgba(255,255,255,0.6); backdrop-filter: blur(6px);}  /* estilo "glass" usado no header para efeito blur */
+    .dark .glass { background: rgba(8,10,10,0.5);}  /* versão do glass no modo escuro */
+    /* hero overlay gradient for readability */
+    .hero-bg{ background-position:center; background-size:cover; } /* classes utilitárias para o background do hero */
+    /* accessible focus ring */
+    .focus-ring:focus{ outline:3px solid rgba(15,77,46,0.18); outline-offset:4px } /* anel de foco acessível para elementos focáveis */
+  </style> <!-- fim do bloco de estilos adicionais -->
+
+</head> <!-- fim do head -->
+<body class="bg-bege text-cinza antialiased font-sans transition-colors duration-300"> <!-- abre body com classes Tailwind: fundo bege, texto cinza, suavização de fontes, fonte sans e transições de cor -->
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50"> <!-- header fixo no topo, ocupa toda a largura e tem z-index alto -->
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between glass shadow-sm rounded-b-lg"> <!-- container do header com layout flex e efeito glass -->
+      <a href="#top" class="flex items-center gap-3" aria-label="Minerar Engenharia - inicio"> <!-- link para topo, com label acessível -->
+       <img src="Favcon/logomarca_sem_fundo.png" alt="Logo da Minerar Engenharia" class="w-11 h-11 rounded-full" /> <!-- logo pequeno, redondo -->
+        <div class="hidden sm:block"> <!-- bloco de texto do logo escondido em telas xs e mostrado a partir de sm -->
+          <div class="font-serif text-lg text-preto">Minerar Engenharia</div> <!-- nome da empresa com fonte serif e cor verde -->
+          <div class="text-xs text-cinza/70 -mt-1">Mineração e Meio Ambiente</div> <!-- subtítulo menor e cor atenuada -->
+        </div>
+      </a>
+
+      <nav id="navMain" class="hidden md:flex gap-6 text-sm items-center"> <!-- navegação principal, escondida em mobile e exibida em md+ -->
+        <a class="nav-link hover:text-verd focus-ring" href="#about">Sobre</a> <!-- link para seção Sobre com hover e foco acessível -->
+        <a class="nav-link hover:text-verd focus-ring" href="#mvvs">Missão</a> <!-- link para MVV -->
+        <a class="nav-link hover:text-verd focus-ring" href="#servicos">Serviços</a> <!-- link para Serviços -->
+        <a class="nav-link hover:text-verd focus-ring" href="#projetos">Projetos</a> <!-- link para Projetos -->
+        <a class="nav-link hover:text-verd focus-ring" href="#equipe">Equipe</a> <!-- link para Equipe -->
+        <a class="nav-link hover:text-verd focus-ring" href="#contato">Contato</a> <!-- link para Contato -->
+      </nav>
+
+      <div class="flex items-center gap-3"> <!-- área de ações à direita do header -->
+        <button id="themeToggle" class="p-2 rounded-md focus-ring" aria-label="Alternar tema"> <!-- botão para alternar tema (modo claro/escuro) -->
+        </button>
+
+        <a href="#contato" class="hidden sm:inline-block px-4 py-2 rounded-full bg-laranja text-white font-medium hover:bg-ouro transition">Solicitar Consultoria</a> <!-- CTA visível a partir de sm: leva ao contato -->
+
+        <!-- mobile menu button -->
+        <button id="btnMobile" class="md:hidden p-2 rounded-md focus-ring" aria-label="Abrir menu"> <!-- botão que abre o menu mobile; visível apenas em telas pequenas -->
+          <svg class="w-6 h-6 text-cinza" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <!-- ícone de "hamburger" -->
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/> <!-- path do ícone -->
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="md:hidden bg-white/80 dark:bg-[#07120f]/80 backdrop-blur hidden border-t"> <!-- menu mobile que começa oculto; tem backdrop blur e variante dark -->
+      <div class="px-4 py-4 flex flex-col gap-3"> <!-- container dos itens do menu mobile em coluna -->
+        <a href="#about" class="py-2">Sobre</a> <!-- item do menu mobile: Sobre -->
+        <a href="#mvvs" class="py-2">Missão</a> <!-- item do menu mobile: Missão -->
+        <a href="#servicos" class="py-2">Serviços</a> <!-- item do menu mobile: Serviços -->
+        <a href="#projetos" class="py-2">Projetos</a> <!-- item do menu mobile: Projetos -->
+        <a href="#equipe" class="py-2">Equipe</a> <!-- item do menu mobile: Equipe -->
+        <a href="#contato" class="py-2">Contato</a> <!-- item do menu mobile: Contato -->
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="pt-24"> <!-- abre main da página e aplica padding-top para compensar o header fixo -->
+
+<!-- Marca: início da seção HERO (seção visual principal do topo da página) -->
+<!-- HERO -->
+<!-- Define a seção que contém o banner principal, com layout relativo para posicionamento absoluto dos overlays -->
+<section class="relative min-h-[72vh] grid items-center">
+  <!-- Background principal (imagem + brilho) -->
+  <!-- Cria um elemento absoluto que cobre toda a seção e aplica uma imagem de fundo com brilho (filter:brightness) -->
+  <div class="absolute inset-0 hero-bg" style="background-image:url('https://images.unsplash.com/photo-1528150177507-7a1b6ff6a1b8?auto=format&fit=crop&w=1920&q=80'); filter:brightness(.6);"></div>
+
+  <!-- overlay escuro por cima da imagem (menos opaco que antes) -->
+  <!-- Adiciona uma camada escura semi-transparente acima da imagem para melhorar contraste do texto -->
+  <div class="absolute inset-0 bg-gray-700/80"></div>
+
+  <!-- Conteúdo acima dos overlays -->
+  <!-- Container relativo e z-10 para ficar acima dos overlays; centraliza conteúdo e cria grid responsiva -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-6 items-center">
+    <!-- Coluna de texto (7 colunas em md+) - logo maior e centralizada -->
+    <!-- Área de texto que ocupa 7 colunas no breakpoint md+; texto em branco, alinhado e centralizado -->
+    <div class="md:col-span-7 text-white flex flex-col items-center text-center">
+      <!-- h1 semântico escondido (SEO + acessibilidade) -->
+      <!-- Título principal escondido visualmente, mas presente para leitores de tela e SEO -->
+      <h1 class="sr-only">Minerar Engenharia</h1>
+
+      <!-- Logo maior e centralizada (retângulo branco apenas atrás da logo) -->
+      <!-- Wrapper flex para centralizar a logo; aqui vamos inserir o retângulo branco atrás apenas da imagem da logo -->
+      <div class="flex items-center justify-center">
+        <!-- wrapper inline para "encaixar" o background somente na área da logo -->
+        <span class="relative inline-flex">
+          <!-- retângulo branco atrás da logo -->
+          <!-- Elemento absoluto posicionado dentro do wrapper; -inset-3 faz ele ficar maior que a logo criando "margem" branca -->
+          <span class="absolute -inset-3 rounded-2xl bg-white shadow-lg z-20 pointer-events-none"></span>
+
+          <!-- logo (em cima do retângulo) -->
+          <!-- A própria imagem da logo, com z maior para ficar sobre o retângulo; classes de tamanho responsivo -->
+          <img src="imagens/minerar-engenharia-sessao.png"
+               alt="Minerar Engenharia"
+               class="relative z-30 h-24 md:h-32 lg:h-40 object-contain">
+        </span>
+      </div>
+
+      <!-- Parágrafo descritivo (centrado) -->
+      <!-- Texto descritivo com margem superior e largura máxima para controlar quebra de texto -->
+      <p class="mt-6 text-lg md:text-xl max-w-xl">
+        Consultoria especializada em Mineração e Licenciamento Ambiental desde 2017. Segurança, técnica e responsabilidade socioambiental.
+      </p>
+
+      <!-- CTAs (centralizados) -->
+      <!-- Botões de ação (call-to-action) alinhados ao centro com espaçamento e comportamento responsivo -->
+      <div class="mt-6 flex gap-3 flex-wrap justify-center">
+        <!-- Botão principal: link para contato; classes personalizadas (bg-ouro) devem existir na sua config do Tailwind -->
+        <a href="#contato" class="px-5 py-3 rounded-full bg-ouro text-white font-semibold shadow hover:opacity-95 transition">Solicitar Consultoria</a>
+        <!-- Botão secundário: link para serviços; uso de bg branco semi-transparente e borda para destaque sutil -->
+        <a href="#servicos" class="px-5 py-3 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 transition">Nossos Serviços</a>
+      </div>
+    </div>
+
+    <!-- Coluna da imagem (5 colunas em md+) -->
+    <!-- Área direita que ocupa 5 colunas em md+: contém o cartão da foto com cantos arredondados e hover sutil -->
+    <div class="md:col-span-5 flex justify-center md:justify-end">
+      <!-- Card de imagem: largura máxima limitada, cantos arredondados, overflow escondido para manter o recorte -->
+      <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl transform transition hover:scale-[1.02]">
+        <!-- Imagem de operação de campo: responsiva, altura fixa (h-80) e cobrir (object-cover) para preencher o card -->
+        <img src="imagens/inicio.jpeg" alt="Operação de campo" class="w-full h-80 object-cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="about" class="py-16 bg-bege relative"> <!-- Seção "about" com padding vertical, fundo bege e posição relativa (para posicionar o logo de fundo) -->
+  <!-- Logo PNG como fundo -->
+  <div class="absolute inset-0 z-0"> <!-- contêiner absoluto cobrindo toda a seção para o logo em background -->
+    <img src="imagens/logomarca_sem_fundo.png" alt="Logomarca" class="w-full h-full object-contain opacity-20" /> <!-- Logo em tamanho total com baixa opacidade para marca de fundo -->
+  </div> <!-- fecha container do logo de fundo -->
+
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-1 gap-8 items-center relative z-10"> <!-- container principal do conteúdo, centralizado, com z-10 para aparecer acima do logo de fundo -->
+    <!-- Texto sobre a empresa -->
+    <div class="text-center"> <!-- bloco de texto alinhado ao centro -->
+      <h2 class="text-4xl font-serif text-verd mb-6">Sobre a Minerar Engenharia</h2> <!-- título da seção sobre com fonte serif e cor verde -->
+      <p class="text-cinza/90 leading-relaxed text-base md:text-lg mb-4"> <!-- primeiro parágrafo sobre a empresa com espaçamento e line-height confortável -->
+        A Minerar Engenharia é uma consultoria com mais de 7 anos de atuação, especializada em licenciamento mineral e ambiental. Oferecemos soluções técnicas completas e estratégicas para o setor mineral. Fundada em 2017 pelos Engenheiros de Minas Vanessa Rodrigues, nossa missão sempre foi entregar serviços de qualidade, com ética, profissionalismo e foco no sucesso de nossos clientes.
+      </p> <!-- fecha primeiro parágrafo -->
+
+      <p class="text-cinza/90 leading-relaxed text-base md:text-lg mb-4"> <!-- segundo parágrafo explicativo -->
+        Mais do que prestadora de serviços, a Minerar Engenharia é parceira de cada projeto, comprometida com o desenvolvimento sustentável e o fortalecimento dos negócios que atende. Atuamos desde a prospecção mineral até o licenciamento, monitoramento e fechamento de mina, com soluções alinhadas às regulamentações ambientais e minerárias.
+      </p> <!-- fecha segundo parágrafo -->
+
+      <p class="text-cinza/90 leading-relaxed text-base md:text-lg mb-4"> <!-- terceiro parágrafo com foco na equipe -->
+        Nossa equipe multidisciplinar é formada por Engenheiros, Tecnólogos, Geomensores e Gestores Ambientais, altamente qualificados e especializados em geologia, engenharia mineral e gestão ambiental. Combinamos expertise técnica e experiência prática para atender a demandas complexas de forma ágil, eficiente e sustentável, sempre em busca de um setor mineral e ambiental mais responsável.
+      </p> <!-- fecha terceiro parágrafo -->
+
+      <p class="text-cinza/90 leading-relaxed text-base md:text-lg mb-6"> <!-- quarto parágrafo encerrando a fala institucional -->
+        Comprometidos com a excelência, entregamos resultados inovadores, ajudando nossos clientes a transformar desafios em oportunidades.
+      </p> <!-- fecha quarto parágrafo -->
+
+      <!-- Quadros destacados -->
+      <div class="mt-6 grid sm:grid-cols-3 gap-8 text-center"> <!-- Grid de estatísticas: 3 colunas a partir de sm, espaçamento e alinhamento central -->
+        <div class="bg-white rounded-xl p-6 shadow-lg"> <!-- Card 1: fundo branco, cantos arredondados, padding e sombra -->
+          <h4 class="text-verd font-semibold text-3xl">+100</h4> <!-- número destacado (projetos) -->
+          <p class="text-sm text-cinza/80">Projetos concluídos</p> <!-- legenda do número -->
+        </div> <!-- fecha card 1 -->
+
+        <div class="bg-white rounded-xl p-6 shadow-lg"> <!-- Card 2 -->
+          <h4 class="text-verd font-semibold text-3xl">+50</h4> <!-- número destacado (empresas atendidas) -->
+          <p class="text-sm text-cinza/80">Empresas atendidas</p> <!-- legenda do número -->
+        </div> <!-- fecha card 2 -->
+
+        <div class="bg-white rounded-xl p-6 shadow-lg"> <!-- Card 3 -->
+          <h4 class="text-verd font-semibold text-3xl">Desde 2017</h4> <!-- destaque de experiência -->
+          <p class="text-sm text-cinza/80">Experiência consolidada</p> <!-- legenda do destaque -->
+        </div> <!-- fecha card 3 -->
+      </div> <!-- fecha grid de quadros destacados -->
+    </div> <!-- fecha bloco de texto central -->
+
+    <!-- Imagem -->
+      </div> <!-- fecha container (observação: esta linha fecha o container principal; se você pretende inserir uma imagem aqui, adicione o markup antes deste fechamento) -->
+  </div> <!-- fecha wrapper do section about (nota: há um fechamento extra de div acima que também fecha o container interno) -->
+</section> <!-- fecha seção about -->
+
+
+    <!-- MVV --> <!-- marcador/label indicando a seção Missão • Visão • Valores -->
+    <section id="mvvs" class="py-12 bg-cinza/90 text-bege"> <!-- Abre a seção com id "mvvs" e padding vertical -->
+      <div class="max-w-6xl mx-auto px-6"> <!-- Container centralizado com largura máxima e padding horizontal -->
+        <h3 class="text-2xl font-serif text-ouro text-center mb-6">Missão • Visão • Valores</h3> <!-- Título da seção: tamanho, fonte e cor definidos, centralizado -->
+        <div class="grid md:grid-cols-3 gap-6"> <!-- Grid responsivo: a partir de md divide em 3 colunas, com gap entre itens -->
+        <div class="p-6 bg-white rounded-2xl shadow-md hover:scale-105 transition transform origin-top flex flex-col justify-center items-center" tabindex="0">
+  <h4 class="font-semibold text-black mb-2">Missão</h4>
+  <p class="text-sm text-black/80">Oferecer soluções técnicas de excelência em mineração e licenciamento ambiental, com ética, inovação e responsabilidade socioambiental.</p>
+</div>
+
+<!-- Fecha card Missão -->
+
+          <div class="p-6 bg-white rounded-2xl shadow-md hover:scale-105 transition transform origin-top flex flex-col justify-center items-center" tabindex="0">
+  <h4 class="font-semibold text-black mb-2">Visão</h4>
+  <p class="text-sm text-black/80">Ser referência nacional em consultoria mineral e ambiental, reconhecida pela qualidade técnica e compromisso com práticas sustentáveis.</p>
+</div>
+ <!-- Fecha card Visão -->
+
+          <div class="p-6 bg-white rounded-2xl shadow-md hover:scale-105 transition transform origin-top flex flex-col justify-center items-center" tabindex="0">
+  <h4 class="font-semibold text-black mb-2">Valores</h4>
+  <p class="text-sm text-black/80">Ética, transparência, compromisso com o cliente, excelência técnica e sustentabilidade.</p>
+</div>
+ <!-- Fecha card Valores -->
+        </div> <!-- Fecha grid -->
+      </div> <!-- Fecha container max-w-6xl -->
+    </section> <!-- Fecha seção MVV -->
+
+    <!-- SERVIÇOS (CARROSSEL) -->
+   <section id="servicos" class="py-16 bg-cinza/90">
+  <div class="max-w-7xl mx-auto px-6">
+    <h3 class="text-3xl font-serif text-ouro text-center mb-8">
+      Nossos Serviços
+    </h3>
+    <div class="grid md:grid-cols-4 gap-6">
+    <!-- Card Licenciamento Mineral -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+      <img src="imagens/IMG-20200626-WA0080.jpg" alt="Licenciamento Mineral" class="w-full h-40 md:h-48 lg:h-56 object-cover">
+      <div class="p-6">
+    <h3 class="text-xl font-semibold text-verd mb-2 text-center">Licenciamento Mineral</h3>
+    <p class="text-cinza/80 mt-2">PAE, planos, relatórios e acompanhamento na ANM.</p>
+    <button data-modal="modal-licenciamento" class="mt-3 inline-block px-4 py-2 rounded bg-black text-white focus-ring hover:brightness-95 transition" aria-label="Saiba mais — Licenciamento">Saiba mais</button>
+      </div>
+    </div>
+
+    <!-- Card Meio Ambiente -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+      <img src="imagens/zmeio ambiente.jpeg" alt="Meio Ambiente" class="w-full h-40 md:h-48 lg:h-56 object-cover">
+      <div class="p-6">
+    <h3 class="text-xl font-semibold text-verd mb-2 text-center">Meio Ambiente</h3>
+    <p class="text-cinza/80 mt-2">Licenças, PRAD, monitoramento e estudos ambientais.</p>
+     <button data-modal="modal-meio" class="mt-3 inline-block px-4 py-2 rounded bg-black text-white focus-ring hover:brightness-95 transition" aria-label="Saiba mais — Meio Ambiente">Saiba mais</button>
+      </div>
+    </div>
+
+    <!-- Card Geoprocessamento -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+      <img src="imagens/ztopografia.jpeg" alt="Geoprocessamento" class="w-full h-40 md:h-48 lg:h-56 object-cover">
+      <div class="p-6">
+    <h3 class="text-xl font-semibold text-verd mb-2 text-center">Geoprocessamento & Topografia</h3>
+    <p class="text-cinza/80 mt-2">Mapeamento, CAR e levantamentos planialtimétricos.</p>
+        <button data-modal="modal-geo" class="mt-3 inline-block px-4 py-2 rounded bg-black text-white">Saiba mais</button>
+      </div>
+    </div>
+
+    <!-- poços -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+      <img src="imagens/pocos-servicos.jpeg" alt="Geoprocessamento" class="w-full h-40 md:h-48 lg:h-56 object-cover">
+      <div class="p-6">
+    <h3 class="text-xl font-semibold text-verd mb-2 text-center">Regularização de Poços Artesianos</h3>
+    <p class="text-cinza/80 mt-2">Regularização, cadastro e monitoramento de poços artesianos, com foco no cumprimento das exigências legais e ambientais.</p>
+        <button data-modal="modal-poço" class="mt-3 inline-block px-4 py-2 rounded bg-black text-white">Saiba mais</button>
+      </div>
+    </div>
+  </div>
+>
+
+              </article> <!-- Fecha article do serviço 2 -->
+            </div> <!-- Fecha slide 2 -->
+          </div> <!-- Fecha swiper-wrapper -->
+        <div class="mt-6 text-center"> <!-- Bloco abaixo do carrossel com margem superior e texto centralizado -->
+        </div> <!-- Fecha bloco "Ver todos os Serviços" -->
+          <!-- pagination and navigation -->
+        </div> <!-- Fecha wrapper do Swiper servicesSwiper -->
+
+      </div> <!-- Fecha container max-w-7xl -->
+    </section> <!-- Fecha seção serviços -->
+
+<!-- MODAL DO LICENCIAMENTO -->
+<div id="modal-licenciamento" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/50 p-4">
+  <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 relative">
+    <!-- Botão de Fechar -->
+    <button data-close class="absolute top-4 right-4 text-gray-500 text-2xl" aria-label="Fechar">&times;</button>
+    <h4 class="text-xl md:text-2xl font-semibold text-green-600 mb-4 break-words leading-tight">Licenciamento Mineral - Detalhes</h4>
+    <p class="text-sm text-gray-700 mb-4">
+      A Mineração Engenharia oferece soluções completas para o processo de licenciamento mineral.
+    </p>
+    <!-- Lista de serviços com categorias -->
+    <div class="space-y-6">
+      <h5 class="font-semibold text-lg text-green-600">Requerimentos Específicos</h5>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li>Autorização de Pesquisa</li>
+        <li>Registro de Licença</li>
+        <li>Registro de Extração Mineral</li>
+        <li>Permissão de Lavra Garimpeira (PLG)</li>
+        <li>Concessão de Lavra</li>
+      </ul>
+
+      <h5 class="font-semibold text-lg text-green-600">Planejamento e Relatórios</h5>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li>PAE (Plano de Aproveitamento Econômico)</li>
+        <li>Plano de Lavra</li>
+        <li>Relatórios de Pesquisa</li>
+        <li>Relatório Negativo de Pesquisa</li>
+        <li>Cessão Total ou Parcial de Direitos Minerários</li>
+      </ul>
+
+      <h5 class="font-semibold text-lg text-green-600">Licenciamento e Monitoramento</h5>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li>Guia de Utilização</li>
+        <li>RAL (Relatório Anual de Lavra)</li>
+        <li>DIPEM (Declaração de Investimentos em Pesquisa Mineral)</li>
+        <li>Plano de Fechamento de Mina</li>
+        <li>Prospecção Mineral</li>
+      </ul>
+
+      <h5 class="font-semibold text-lg text-green-600">Acompanhamento e Responsabilidade Técnica</h5>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li>Acompanhamento de Processos na ANM</li>
+        <li>Cumprimento de Exigências na ANM</li>
+        <li>Responsabilidade Técnica pela Lavra</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    </div> <!-- Fecha modal-licenciamento -->
+
+<!-- MODAL DO MEIO AMBIENTE -->
+<div id="modal-meio" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/50 p-4">
+  <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 relative">
+    <!-- Botão de fechar -->
+    <button data-close class="absolute top-4 right-4 text-gray-500 text-2xl" aria-label="Fechar">&times;</button>
+
+    <!-- Título -->
+    <h4 class="text-xl md:text-2xl font-semibold text-green-600 mb-4 break-words leading-tight">Meio Ambiente - Detalhes</h4>
+
+    <!-- Descrição geral do serviço -->
+    <p class="text-sm text-gray-700 mb-4">
+      A Mineração Engenharia oferece uma consultoria completa para o cumprimento de exigências ambientais, regularização e monitoramento.
+    </p>
+
+    <!-- Conteúdo em tópicos -->
+    <div class="space-y-6">
+      <h5 class="font-semibold text-lg text-green-600">Serviços de Meio Ambiente</h5>
+      
+      <h6 class="font-semibold text-lg text-green-600">Consultoria e Diagnóstico</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Avaliação e Diagnóstico Ambiental</strong>: Análise do ambiente para identificar impactos e propor soluções sustentáveis.</li>
+        <li><strong>Cumprimento de Exigências em Órgãos Ambientais</strong>: Suporte para atender às demandas de órgãos reguladores e facilitar a aprovação de projetos.</li>
+        <li><strong>Dispensa de Licença Ambiental (Estadual e Municipal)</strong>: Processo de obtenção de isenção de licença para atividades de baixo impacto.</li>
+        <li><strong>Inventário Florestal</strong>: Levantamento de espécies vegetais e sua distribuição em áreas de interesse.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Licenciamento e Monitoramento</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Licenças Ambientais</strong>:
+          <ul class="list-inside text-sm text-gray-600">
+            <li>Licença Prévia</li>
+            <li>Licença de Instalação</li>
+            <li>Licença de Operação</li>
+            <li>Renovação de Licença Ambiental</li>
+            <li>Autorizações em Geral</li>
+          </ul>
+        </li>
+        <li><strong>Planos e Projetos Ambientais</strong>:
+          <ul class="list-inside text-sm text-gray-600">
+            <li>Plano de Controle Ambiental (PCA)</li>
+            <li>Plano de Recuperação de Áreas Degradadas (PRAD)</li>
+            <li>Pedido de Autorização Ambiental</li>
+            <li>Projeto de Recomposição de Áreas de Preservação Permanente</li>
+          </ul>
+        </li>
+        <li><strong>Relatórios Ambientais</strong>:
+          <ul class="list-inside text-sm text-gray-600">
+            <li>Relatório Ambiental Prévio (RAP)</li>
+            <li>Relatório de Controle Ambiental (RCA)</li>
+            <li>Relatório de Impacto Ambiental (RIMA)</li>
+            <li>Relatório de Monitoramento Ambiental (RMA)</li>
+            <li>Relatório Técnico de Conclusão</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Gestão de Resíduos</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>PGRS (Plano de Gerenciamento de Resíduos Sólidos)</strong></li>
+        <li><strong>PGRCC (Plano de Gerenciamento de Resíduos da Construção Civil)</strong></li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Laudos Técnicos</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Laudo Geológico</strong>: Relatório técnico que analisa as condições geológicas do terreno para atividades de exploração e ocupação.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL DE GEOPROCESSAMENTO E TOPOGRAFIA -->
+<div id="modal-geo" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 relative break-words">
+    <!-- Botão de fechar -->
+    <button data-close class="absolute top-4 right-4 text-gray-500 text-2xl">&times;</button>
+
+    <!-- Título -->
+    <h4 class="text-2xl font-semibold text-green-600 mb-4">Geoprocessamento - Detalhes</h4>
+
+    <!-- Descrição geral do serviço -->
+    <p class="text-sm text-gray-700 mb-4">
+      A Mineração Engenharia oferece serviços especializados de análise espacial e levantamento topográfico para garantir a precisão necessária nos estudos e projetos de seus clientes.
+    </p>
+
+    <!-- Conteúdo em tópicos -->
+    <div class="space-y-6">
+      <h5 class="font-semibold text-lg text-green-600">Serviços de Geoprocessamento e Topografia</h5>
+
+      <h6 class="font-semibold text-lg text-green-600">Levantamento Aéreo</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Captura de dados e imagens aéreas</strong> para análise de terreno e planejamento de operações.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Topografia</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Levantamentos Planialtimétricos, Planimétricos e Geodésicos</strong>: Levantamentos detalhados de terrenos, essenciais para o planejamento e execução de projetos.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Cadastro Ambiental Rural (CAR)</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Regularização e georreferenciamento de propriedades rurais</strong>, conforme a legislação ambiental vigente.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Mapeamento de Uso e Ocupação do Solo</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Análise da ocupação e uso das áreas</strong> para apoio à gestão e planejamento ambiental.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Elaboração de Plantas e Mapas Temáticos em SIG</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Criação de mapas especializados</strong> para localização, hidrografia, altimetria, uso do solo, declividade, entre outros aspectos essenciais.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL DE REGULARIZAÇÃO DE POÇOS ARTESIANOS -->
+<div id="modal-poço" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/50 p-4">
+       <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 relative"> <!-- Fundo branco, bordas arredondadas, ocupa 100% de largura, limite máximo de largura 4xl, altura máxima 90% da tela, rolagem automática se necessário, padding de 1.5rem, e posicionamento relativo -->
+    <!-- Botão de fechar -->
+    <button data-close class="absolute top-4 right-4 text-gray-500 text-2xl">&times;</button>
+
+    <!-- Título -->
+    <h4 class="text-2xl font-semibold text-green-600 mb-4">Poços Artesianos - Detalhes</h4>
+
+    <!-- Descrição geral do serviço -->
+    <p class="text-sm text-gray-700 mb-4">
+      A Mineração Engenharia oferece serviços essenciais para a legalização e operação sustentável de poços artesianos, com foco no cumprimento das exigências legais e ambientais.
+    </p>
+
+    <!-- Conteúdo em tópicos -->
+    <div class="space-y-6">
+      <h5 class="font-semibold text-lg text-green-600">Serviços de Regularização de Poços Artesianos</h5>
+
+      <h6 class="font-semibold text-lg text-green-600">Teste de Vazão e Recuperação</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Determinação do volume e da capacidade de recuperação do poço</strong>, essencial para garantir o uso sustentável da água.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Outorga</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Regularização legal para o uso da água</strong>, obtendo a autorização necessária para o uso dos recursos hídricos.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Cadastro de Uso Insignificante</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Cadastro para pequenos usos de água</strong>, que não requerem outorga, mas precisam de registro legal conforme a legislação vigente.</li>
+      </ul>
+
+      <h6 class="font-semibold text-lg text-green-600">Medição de Nível Estático e Dinâmico</h6>
+      <ul class="list-disc pl-6 text-sm text-gray-600">
+        <li><strong>Avaliação do comportamento dos níveis de água</strong> do poço, tanto em repouso quanto durante o bombeamento, garantindo eficiência no uso dos recursos.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <!-- PROJETOS (Swiper coverflow) -->
+     
+<section id="projetos" class="py-16 bg-cinza/90"><!-- Abre seção "projetos" com padding vertical e fundo bege semitransparente -->
+  <div class="max-w-7xl mx-auto px-6"> <!-- Container centralizado com largura máxima e padding horizontal -->
+    <h3 class="text-3xl font-serif text-ouro text-center mb-8">Projetos em Destaque</h3> <!-- Título da seção, centralizado, com fonte serif e margem inferior -->
+
+    <div class="swiper projectsSwiper"> <!-- Container principal do Swiper (carrossel) com classe custom "projectsSwiper" -->
+      <div class="swiper-wrapper"> <!-- Wrapper que agrupa todos os slides -->
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide"> <!-- Slide individual 1 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide com fundo branco, cantos arredondados, overflow escondido e sombra -->
+            <img src="imagens/projetooo.jpeg" alt="Case A" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto cobrindo a área definida -->
+           </figure> <!-- Fecha figure do slide 1 -->
+        </div> <!-- Fecha slide 1 -->
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide"> <!-- Slide individual 2 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide 2 -->
+            <img src="imagens/projetoooo.jpeg" alt="Case B" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto 2 -->
+          </figure> <!-- Fecha figure slide 2 -->
+        </div> <!-- Fecha slide 2 -->
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide"> <!-- Slide individual 3 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide 3 -->
+            <img src="imagens/projetooooo.jpeg" alt="Case C" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto 3 -->
+           </figure> <!-- Fecha figure slide 3 -->
+        </div> <!-- Fecha slide 3 -->
+
+        <!-- Slide 4 -->
+        <div class="swiper-slide"> <!-- Slide individual 4 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide 4 -->
+            <img src="imagens/projetoooooo.jpeg" alt="Case D" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto 4 -->
+           </figure> <!-- Fecha figure slide 4 -->
+        </div> <!-- Fecha slide 4 -->
+
+        <!-- Slide 5 -->
+        <div class="swiper-slide"> <!-- Slide individual 5 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide 5 -->
+            <img src="imagens/projeto7.jpeg" alt="Case E" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto 5 -->
+           </figure> <!-- Fecha figure slide 5 -->
+        </div> <!-- Fecha slide 5 -->
+        <!-- Slide 6 -->
+        <div class="swiper-slide"> <!-- Slide individual 5 -->
+          <figure class="bg-white rounded-lg overflow-hidden shadow"> <!-- Caixa do slide 5 -->
+            <img src="imagens/projetos.jpeg" alt="Case E" class="w-full h-auto sm:h-48 object-cover"> <!-- Imagem do projeto 5 -->
+           </figure> <!-- Fecha figure slide 6 -->
+        </div> <!-- Fecha slide 6 -->
+      </div> <!-- Fecha swiper-wrapper -->
+
+      <!-- Navigation -->
+      <div class="swiper-button-next text-verd"></div> <!-- Botão "Próximo" do Swiper; estilizado com cor verde -->
+      <div class="swiper-button-prev text-verd"></div> <!-- Botão "Anterior" do Swiper; estilizado com cor verde -->
+      <div class="swiper-pagination"></div> <!-- Container onde o Swiper insere os bullets/pagination -->
+
+    </div> <!-- Fecha container do Swiper projectsSwiper -->
+  </div> <!-- Fecha container max-w-7xl -->
+</section> <!-- Fecha seção projetos -->
+<!-- Seção de Projetos -->
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="swiper projectsSwiper">
+      <div class="swiper-wrapper">
+        <!-- Slides aqui (mesmo código que você já tem) -->
+
+      </div> <!-- Fecha swiper-wrapper -->
+
+      <!-- Navegação -->
+      <div class="swiper-button-next text-verd"></div> <!-- Botão próximo -->
+      <div class="swiper-button-prev text-verd"></div> <!-- Botão anterior -->
+
+      <!-- Paginação -->
+      <div class="swiper-pagination"></div> <!-- Paginação dos slides -->
+    </div> <!-- Fecha swiper projectsSwiper -->
+
+    </div> <!-- Fecha bloco do link -->
+  </div> <!-- Fecha container -->
+</section> <!-- Fecha seção projetos -->
+
+<!-- EQUIPE (carrossel automático responsivo: 1 foto no mobile, 2 no desktop) -->
+<section id="equipe" class="py-16 bg-cinza/90">
+ <!-- abre seção "equipe" com padding vertical e fundo bege -->
+  <div class="max-w-7xl mx-auto px-6 text-center"> <!-- container centralizado, largura máxima e texto centralizado -->
+    <h3 class="text-3xl font-serif text-ouro mb-8">Nossa Equipe</h3> <!-- título da seção com tamanho, fonte e cor -->
+
+    <!-- Swiper --> <!-- comentário indicando início do carrossel Swiper -->
+    <div class="swiper mySwiper rounded-2xl shadow-md"> <!-- wrapper do Swiper com classe custom e estilo (bordas + sombra) -->
+      <div class="swiper-wrapper"> <!-- container que agrupa os slides do Swiper -->
+
+      
+        <!-- Slide 2 -->
+        <div class="swiper-slide relative"> <!-- slide 2 com mesma estrutura -->
+          <img src="imagens/fotos da espipe5.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 2 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 2 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 2 -->
+              <h4 class="font-serif text-lg"> </h4> <!-- nome -->
+              <p class="text-sm"> </p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 2 -->
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide relative"> <!-- slide 3 -->
+          <img src="imagens/fotos da esquipe2.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 3 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 3 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 3 -->
+              <h4 class="font-serif text-lg"> </h4> <!-- nome -->
+              <p class="text-sm"></p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 3 -->
+
+        <!-- Slide 4 -->
+        <div class="swiper-slide relative"> <!-- slide 4 -->
+          <img src="imagens/fotos da esquipe3.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 4 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 4 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 4 -->
+              <h4 class="font-serif text-lg"> </h4> <!-- nome (pode ajustar se for outro membro) -->
+              <p class="text-sm"></p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 4 -->
+
+        <!-- Slide 5 -->
+        <div class="swiper-slide relative"> <!-- slide 5 -->
+          <img src="imagens/fotos da equipe.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 5 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 5 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 5 -->
+              <h4 class="font-serif text-lg"> </h4> <!-- nome -->
+              <p class="text-sm"> </p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 5 -->
+
+        <!-- Slide 6 -->
+        <div class="swiper-slide relative"> <!-- slide 6 -->
+          <img src="imagens/fotos da esquipe.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 6 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 6 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 6 -->
+              <h4 class="font-serif text-lg"></h4> <!-- nome -->
+              <p class="text-sm"></p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 6 -->
+                <!-- Slide 7 -->
+        <div class="swiper-slide relative"> <!-- slide 6 -->
+          <img src="imagens/zequipe.jpeg" alt="Equipe em campo" class="w-full h-96 object-cover"> <!-- imagem slide 6 -->
+          <div class="absolute inset-0 bg-verd/0 hover:bg-verd/60 transition-colors flex items-end"> <!-- overlay slide 6 -->
+            <div class="w-full p-6 text-left opacity-0 hover:opacity-100 transition-opacity text-white"> <!-- painel texto slide 6 -->
+              <h4 class="font-serif text-lg"></h4> <!-- nome -->
+              <p class="text-sm"></p> <!-- cargo -->
+            </div> <!-- fecha painel texto -->
+          </div> <!-- fecha overlay -->
+        </div> <!-- fecha slide 6 -->
+        
+      </div> <!-- fecha swiper-wrapper -->
+
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div> <!-- container onde o Swiper colocará os bullets/pagination -->
+    </div> <!-- fecha swiper mySwiper -->
+  </div> <!-- fecha container central -->
+</section> <!-- fecha seção equipe -->
+
+<!-- Import Swiper CSS e JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/> <!-- importa CSS oficial do Swiper (estilos do carrossel) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> <!-- importa JS do Swiper (funcionalidade do carrossel) -->
+
+<script> 
+  var swiper = new Swiper(".mySwiper", { // inicializa Swiper na classe .mySwiper
+    loop: true, // ativa loop infinito dos slides
+    autoplay: { // configura autoplay
+      delay: 4000, // tempo entre trocas (4 segundos)
+      disableOnInteraction: false, // não parar autoplay quando usuário interage
+    },
+    pagination: { // configura paginação
+      el: ".swiper-pagination", // seletor do container de paginação
+      clickable: true, // permite clicar nas bolinhas para navegar
+    },
+    slidesPerView: 1, // padrão para mobile: 1 slide por vez
+    spaceBetween: 20, // espaço em px entre slides
+    breakpoints: { // pontos de quebra para responsividade
+      768: { // a partir de 768px (tablet/desktop)
+        slidesPerView: 2, // mostrar 2 slides lado a lado
+      }
+    }
+  }); // fecha inicialização do Swiper
+</script> <!-- fecha script -->
+
+
+<!-- PROPRIETÁRIA (foto + bio com CTA) -->
+<section id="proprietaria" class="py-12 bg-cinza/90"> <!-- Seção da proprietária; padding vertical e fundo bege -->
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center"> <!-- Container centralizado, grid com 2 colunas a partir de md, espaçamento entre colunas e alinhamento vertical -->
+    <img src="imagens/proprietaria 2.jpeg" alt="Proprietária" class="w-full h-96 object-cover rounded-2xl shadow-md"> <!-- Imagem responsiva da proprietária, altura fixa, recorte cover, cantos arredondados e sombra -->
+    <div> <!-- Coluna de texto (segunda coluna do grid) -->
+      <h3 class="text-2xl font-serif text-ouro mb-4">Vanessa Rodrigues — Fundadora</h3> <!-- Título com fonte serif, cor verde e margem inferior -->
+      <p class="text-white mb-6">Vanessa Rodrigues é Engenheira de Minas (2017) e Engenheira de Segurança do Trabalho, com formações complementares na área ambiental e ampla experiência em consultoria mineral. Idealizadora e fundadora da Minerar Engenharia, construiu sua trajetória à frente de projetos de licenciamento e gestão ambiental em diferentes regiões do Piauí.
+Além de sua atuação empreendedora, acumula experiência em funções de coordenação e gestão no setor público, contribuindo diretamente para o desenvolvimento de projetos estratégicos voltados ao fortalecimento da mineração no estado.</p> <!-- Parágrafo descritivo com cor cinza e margem inferior; texto sobre a fundadora -->
+    </div> <!-- Fecha coluna de texto -->
+  </div> <!-- Fecha container do grid -->
+</section> <!-- Fecha seção da proprietária -->
+
+<!-- seção de parceiros: padding vertical e fundo cinza translúcido -->
+<section id="parceiros" class="py-12 bg-cinza/90">
+  <!-- container central com largura máxima (7xl) e padding horizontal -->
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- título da seção: tamanho, fonte serif, cor ouro, centralizado e margem-bottom -->
+    <h3 class="text-xl font-serif text-ouro text-center mb-6">Empresas Parceiras</h3>
+
+    <!-- WRAPPER PRINCIPAL: relativo para posicionar o retângulo absoluto por trás do conteúdo -->
+    <div class="relative max-w-6xl mx-auto px-6 py-8">
+      <!-- RETÂNGULO: ocupa todo o wrapper (inset-0), branco semi-opaco, cantos arredondados, sombra; pointer-events-none evita que bloqueie cliques -->
+      <div class="absolute inset-0 bg-white/90 rounded-2xl shadow-lg z-10 pointer-events-none"></div>
+
+      <!-- GRID das logos principais: responsivo (2 / 3 / 6 colunas). z-20 garante que as logos fiquem sobre o retângulo -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center relative z-20">
+
+        <!-- 1 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logomodificadateresinashopping- Editado.png" alt="Parceiro 1" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 2 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logomodificada1sucesso.png" alt="Parceiro 2" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 3 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoCaptura de tela 2025-09-23 083716LOGO.png" alt="Parceiro 3" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 4 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logomodificadag3_telecom_pi_logo - Editado.png" alt="Parceiro 4" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 5 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoimages (1)LOGO.jpg" alt="Parceiro 5" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 6 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoimages (1)LOGO.png" alt="Parceiro 6" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 7 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoimages (2)LOGO.jpg" alt="Parceiro 7" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 8 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoterracalmodificadaimages - Editado (1).png" alt="Parceiro 8" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 9 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoDEmodificadaimages - Editado.png" alt="Parceiro 9" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 10 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logokvxSStTnANfBLTRyClOTwZXtbqVcWJFycDoCKyEuEGHpmDelqXPBglfZRSiwDsqFLOGO.png" alt="Parceiro 10" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 11 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/mercosullogomodificadaunnamed (1) - Editado.png" alt="Parceiro 11" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- 12 -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logomLOGO.png" alt="Parceiro 12" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+      </div> <!-- /grid: fim do grid das logos principais -->
+
+      <!-- ======= NOVO BLOCO: as 3 últimas logos CENTRALIZADAS =======
+           - flex: cria uma linha flexível
+           - flex-wrap: permite quebrar em várias linhas em telas pequenas
+           - justify-center: centraliza horizontalmente
+           - gap-6: espaçamento entre logos
+           - relative z-20: mantém estas imagens acima do retângulo branco -->
+      <div class="mt-8 flex flex-wrap justify-center gap-6 items-center relative z-20">
+
+        <!-- logo 13 (Cerâmica Livramento) -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logoceramica-livramento.png" alt="Cerâmica Livramento" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- logo 14 (Campo Maior) -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logo-campo-maior.png" alt="Cerâmica Campo Maior" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+        <!-- logo 15 (Piauí Níquel) -->
+        <div class="flex items-center justify-center p-2">
+          <img src="imagens/logomodificadaPiaui-Niquel - Editado.png" alt="Piauí Níquel" class="h-20 max-w-full object-contain" loading="lazy">
+        </div>
+
+      </div> <!-- /bloco centralizado das 3 últimas logos -->
+
+    </div> <!-- /wrapper principal: fecha o bloco relativo que contém retângulo + conteúdo -->
+
+  </div> <!-- /container max-w-7xl -->
+</section> <!-- /seção parceiros -->
+
+<!-- CONTATO -->
+<section id="contato" class="py-16 bg-cinza/90"><!-- abre seção "contato" com padding vertical e fundo bege semitransparente -->
+  <div class="max-w-4xl mx-auto px-6 text-center"> <!-- container centralizado com largura máxima, padding horizontal e texto centralizado -->
+    <h3 class="text-3xl font-serif text-ouro mb-4">Contato</h3> <!-- título da seção com tamanho grande, fonte serif e cor verde -->
+    <p class="text-white mb-6">Fale conosco: dúvidas técnicas, orçamentos ou parcerias.</p> <!-- descrição curta da seção com cor cinza e margem inferior -->
+
+    <div class="contact-card bg-white rounded-2xl p-6 shadow text-left mx-auto max-w-lg"> <!-- cartão branco centralizado, bordas arredondadas, padding, sombra e alinhamento do texto à esquerda -->
+      <h4 class="font-semibold text-verd mb-2">Entre em contato</h4> <!-- subtítulo do cartão com peso de fonte e cor verde -->
+      <p class="text-sm text-cinza/80 mb-4">Email, WhatsApp e redes sociais. Resposta em até 24h úteis.</p> <!-- observação sobre canais e tempo de resposta em texto pequeno -->
+      <p class="text-sm"><strong>Email:</strong> <a href="mailto:minerar.pi@gmail.com" class="text-verd">minerar.pi@gmail.com</a></p> <!-- linha com email; link mailto para abrir cliente de email, texto em verde -->
+      <p class="text-sm mt-2"><strong>WhatsApp:</strong> <a href="https://wa.me/+5586981126890" target="_blank" class="text-verd">(86) 86 98112-6890</a></p> <!-- linha com WhatsApp; link wa.me abre chat em nova aba, formato visual do número exibido -->
+      <p class="text-sm mt-2"><strong>Instagram:</strong> <a href="https://www.instagram.com/minerar.engenharia/" target="_blank" class="text-verd">Minerar.engenharia</a></p> <!-- link para perfil do Instagram abrindo em nova aba -->
+
+      <!-- Redes sociais -->
+      <div class="mt-6 flex justify-center gap-6"> <!-- container horizontal para ícones sociais, centralizado e com espaçamento entre ícones -->
+        <a href="https://www.instagram.com/minerar.engenharia/" target="_blank" class="text-verd hover:text-ouro transition"> <!-- link para Instagram; muda cor ao passar o mouse e tem transição suave -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"> <!-- SVG do ícone (placeholder) com largura/altura definidas -->
+            <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6"/> <!-- forma retangular arredondada do ícone (estilizado) -->
+          </svg>
+        </a> <!-- fecha link Instagram -->
+
+        <a href="https://wa.me/+5586981126890" target="_blank" class="text-verd hover:text-ouro transition"> <!-- link para WhatsApp; abre chat em nova aba, com efeito hover -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"> <!-- SVG do ícone do WhatsApp (placeholder) -->
+            <path d="M21 12.3a8.7 8.7 0 10-2.5 6.1L22 22l-3.7-1.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/> <!-- traçado simples representando o ícone -->
+          </svg>
+        </a> <!-- fecha link WhatsApp -->
+
+        <a href="https://www.linkedin.com/in/vanessa-rodrigues-engenheira-de-minas-e-engenheira-de-seguran%C3%A7a-856231317/" target="_blank" class="text-verd hover:text-ouro transition"> <!-- link para LinkedIn; abre em nova aba e tem efeito hover -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"> <!-- SVG do ícone do LinkedIn (placeholder) -->
+            <path d="M6 9v9M4 6a2 2 0 11.001 0A2 2 0 014 6zM22 18v-6a3 3 0 00-3-3c-1.5 0-2 1-2 1v-1h-3v9h3v-5c0-1 .5-2 1.7-2 1.3 0 1.6 1 1.6 2v5h3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/> <!-- traçado do ícone do LinkedIn -->
+          </svg>
+        </a> <!-- fecha link LinkedIn -->
+      </div> <!-- fecha container de ícones sociais -->
+    </div> <!-- fecha contact-card -->
+  </div> <!-- fecha container central -->
+</section> <!-- fecha seção contato -->
+
+    <!-- RODAPÉ -->
+    <footer class="bg-verd text-bege py-6"> <!-- Início do rodapé, fundo verde, texto bege e padding vertical -->
+      <div class="max-w-7xl mx-auto px-6 flex items-center justify-between"> <!-- Container centralizado, largura máxima, espaçamento interno -->
+        <p class="text-sm">&copy; <span id="year"></span> Minerar Engenharia — Todos os direitos reservados.</p> <!-- Texto de direitos autorais + ano dinâmico -->
+        <div class="flex gap-4"> <!-- Container horizontal para ícones das redes sociais -->
+          <a href="https://www.instagram.com/minerar.engenharia/" target="_blank" rel="noopener" aria-label="Instagram"> <!-- Link para Instagram -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6"/></svg> <!-- Ícone em SVG -->
+          </a>
+          <a href="https://wa.me/+5586988034030" target="_blank" rel="noopener" aria-label="WhatsApp"> <!-- Link para WhatsApp -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M21 12.3a8.7 8.7 0 10-2.5 6.1L22 22l-3.7-1.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> <!-- Ícone em SVG -->
+          </a>
+          <a href="https://www.linkedin.com/in/vanessa-rodrigues-engenheira-de-minas-e-engenheira-de-seguran%C3%A7a-856231317/" aria-label="LinkedIn"> <!-- Link para LinkedIn -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M6 9v9M4 6a2 2 0 11.001 0A2 2 0 014 6zM22 18v-6a3 3 0 00-3-3c-1.5 0-2 1-2 1v-1h-3v9h3v-5c0-1 .5-2 1.7-2 1.3 0 1.6 1 1.6 2v5h3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> <!-- Ícone em SVG -->
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </main> <!-- Fecha o conteúdo principal -->
+
+  <!-- SCRIPTS -->
+  <script>
+    // --- util
+    const $ = (s, ctx=document) => ctx.querySelector(s); // Função utilitária: seleciona o primeiro elemento
+    const $$ = (s, ctx=document) => Array.from(ctx.querySelectorAll(s)); // Seleciona todos os elementos e transforma em array
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear(); // Preenche o <span id="year"> com o ano atual
+
+    // mobile menu
+    const btnMobile = $('#btnMobile'), mobileMenu = $('#mobileMenu'); // Pega botões/menu mobile
+    btnMobile.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); // Alterna a visibilidade do menu no clique
+
+    // Swiper services
+    const servicesSwiper = new Swiper('.servicesSwiper',{ // Inicializa o carrossel da seção "serviços"
+      slidesPerView: 1.05, // Quantos slides aparecem por vez
+      spaceBetween: 14, // Espaço entre os slides
+      loop: true, // Repetição infinita
+      autoplay: { delay:5000, disableOnInteraction: false }, // Avança automático a cada 5s
+      breakpoints: { 768: { slidesPerView: 2.1 }, 1024: { slidesPerView: 3 } }, // Ajusta slides visíveis por largura de tela
+      pagination: { el: '.servicesSwiper .swiper-pagination', clickable: true } // Bolinhas de navegação
+    });
+
+    // projects swiper (coverflow)
+const projectsSwiper = new Swiper('.projectsSwiper', { // Inicializa carrossel de projetos
+  effect: 'coverflow', // Efeito 3D coverflow
+  grabCursor: true, // Cursor tipo "mão"
+  centeredSlides: true, // Slide centralizado
+  slidesPerView: 3, // Três slides visíveis
+  loop: false,  // Não repete automaticamente
+  initialSlide: 1, // Começa no segundo slide (índice 1)
+  coverflowEffect: {
+    rotate: 15, // Ângulo de rotação
+    stretch: 0, // Espaçamento lateral
+    depth: 120, // Profundidade do efeito
+    modifier: 1, // Intensidade
+  },
+  pagination: {
+    el: '.projectsSwiper .swiper-pagination', // Bolinhas de navegação
+    clickable: true,
+  },
+  navigation: {
+    nextEl: '.projectsSwiper .swiper-button-next', // Botão próximo
+    prevEl: '.projectsSwiper .swiper-button-prev', // Botão anterior
+  },
+  breakpoints: { // Responsividade
+    768: {
+      slidesPerView: 2, // Tablet: 2 slides
+    },
+    1024: {
+      slidesPerView: 3, // Desktop: 3 slides
+    },
+  },
+});
+
+    // modals
+    $$('[data-modal]').forEach(btn=> btn.addEventListener('click', ()=>{ // Botão que abre modal
+      const id = btn.dataset.modal; const m = document.getElementById(id); if(m) m.classList.remove('hidden'); // Exibe modal
+    }));
+    $$('[data-close]').forEach(btn=> btn.addEventListener('click', ()=> btn.closest('[id^="modal-"]').classList.add('hidden'))); // Fecha modal no botão
+    $$('[id^="modal-"]').forEach(m => m.addEventListener('click', (e)=>{ if(e.target === m) m.classList.add('hidden'); })); // Fecha modal clicando fora
+    window.addEventListener('keydown', e=> { if(e.key === 'Escape') $$('[id^="modal-"]').forEach(mm => mm.classList.add('hidden')) }); // Fecha modal com ESC
+
+    // smooth scroll  anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{ // Seleciona links âncora
+      a.addEventListener('click', (ev)=>{ // Quando clica
+        const href = a.getAttribute('href'); if(href === '#' || href === '') return; // Ignora links vazios
+        const el = document.querySelector(href); // Seleciona o destino
+        if(!el) return; ev.preventDefault(); // Bloqueia comportamento padrão
+        const y = el.getBoundingClientRect().top + window.scrollY - 80; // Calcula posição de rolagem
+        window.scrollTo({top:y, behavior:'smooth'}); // Faz rolagem suave
+      })
+    })
+
+    // reveal on scroll (simple)
+    const io = new IntersectionObserver((entries)=>{ // Cria observer para ver quando elementos aparecem
+      entries.forEach(en=>{ if(en.isIntersecting){ // Se o elemento entrou na tela
+        en.target.classList.add('opacity-100','translate-y-0'); // Aplica classes de animação
+        io.unobserve(en.target); // Para de observar esse elemento
+      } });
+    },{threshold:0.12}); // Quando 12% do elemento estiver visível
+    document.querySelectorAll('.service-card, .team-card, .portfolio-item, .mvv-item').forEach(el=>{ 
+      el.classList.add('opacity-0','-translate-y-4','transition','duration-700'); // Define estado inicial invisível
+      io.observe(el); // Observa cada elemento
+    });
+
+</script>
+</body>
+</html>
+
